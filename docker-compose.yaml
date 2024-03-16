@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres
+    container_name: swagger-study
+    volumes:
+      - ./db/user.sql:/docker-entrypoint-initdb.d/user.sql
+    environment:
+      POSTGRES_PASSWORD: "swagger"
+    ports:
+      - "5432:5432"

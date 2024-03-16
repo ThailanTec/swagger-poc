@@ -1,0 +1,82 @@
+basePath: /api/v1
+definitions:
+  model.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: Bad Request, erro ao criar usuário.
+        type: string
+    type: object
+  model.Status:
+    enum:
+    - active
+    - inactive
+    type: string
+    x-enum-varnames:
+    - Active
+    - Inactive
+  model.UserInput:
+    properties:
+      email:
+        example: thailan@gmail.com
+        type: string
+      name:
+        example: Thailan Santos
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  model.UserOutput:
+    properties:
+      email:
+        example: thailan@gmail.com
+        type: string
+      id:
+        example: c087a2ed-6694-49ad-884a-eecade5a2f90
+        type: string
+      name:
+        example: Thailan Santos
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/model.Status'
+        example: active
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Esta é uma API Swagger para um exemplo de projeto Go com Gin.
+  license: {}
+  termsOfService: https://example.com/terms/
+  title: Sua API Swagger Title
+  version: "2.0"
+paths:
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo usuário com base nos dados fornecidos
+      operationId: create-resource
+      parameters:
+      - description: Dados do novo usuário
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.UserOutput'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Criar um novo usuário
+swagger: "2.0"

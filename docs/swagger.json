@@ -1,0 +1,121 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Esta é uma API Swagger para um exemplo de projeto Go com Gin.",
+        "title": "Sua API Swagger Title",
+        "termsOfService": "https://example.com/terms/",
+        "contact": {},
+        "license": {},
+        "version": "2.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/user": {
+            "post": {
+                "description": "Cria um novo usuário com base nos dados fornecidos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Criar um novo usuário",
+                "operationId": "create-resource",
+                "parameters": [
+                    {
+                        "description": "Dados do novo usuário",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.UserOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Bad Request, erro ao criar usuário."
+                }
+            }
+        },
+        "model.Status": {
+            "type": "string",
+            "enum": [
+                "active",
+                "inactive"
+            ],
+            "x-enum-varnames": [
+                "Active",
+                "Inactive"
+            ]
+        },
+        "model.UserInput": {
+            "type": "object",
+            "required": [
+                "email",
+                "name"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "thailan@gmail.com"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Thailan Santos"
+                }
+            }
+        },
+        "model.UserOutput": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "thailan@gmail.com"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "c087a2ed-6694-49ad-884a-eecade5a2f90"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Thailan Santos"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.Status"
+                        }
+                    ],
+                    "example": "active"
+                }
+            }
+        }
+    }
+}
